@@ -1,0 +1,16 @@
+<launch>
+<!--play rosbag -->
+<node pkg="rosbag" type="play" name="player" output="screen" args="/home/xli4217/teleop_bags/1.bag"/>
+<!-- decompress camera image -->
+<node pkg="image_transport" type="republish" name="CompressedImg2Img" output="screen" args="compressed in:=/stereo/left/image_raw _image_transport:=compressed raw out:=/camera/left" />
+<!-- launch rviz -->
+<node pkg="rviz" type="rviz" name="rlsrviz" output="screen" args="-d /home/xli4217/barrett_ws/src/rls_force_estimation/ros_rls_estimation/rviz/rlsRviz.rviz"/>
+<!-- launch ros_rls_estimator -->
+<node pkg="ros_rls_estimation" type="ros_rls_estimation" name="RLSestimator" output="screen"/>
+</launch>
+
+
+
+
+
+

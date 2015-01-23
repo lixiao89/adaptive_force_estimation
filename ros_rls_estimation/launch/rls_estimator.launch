@@ -1,0 +1,4 @@
+<launch>
+  <node name="ros_rls_estimation" pkg="ros_rls_estimation" type="RLSEstimator" />
+  <node name="rqt" pkg="rqt" type="rqt"/>
+</launch>

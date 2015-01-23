@@ -1,0 +1,154 @@
+SET ( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake" 
+) #required to find my custom features
+
+#include my custom cmake features
+INCLUDE ( MacroLogFeature )
+# INCLUDE ( FindQGLViewer )
+
+#include required packages
+FIND_PACKAGE ( Qt4 REQUIRED ) # find and setup Qt4 for this project)
+FIND_PACKAGE ( QGLViewer REQUIRED )
+FIND_PACKAGE ( GMP REQUIRED )
+FIND_PACKAGE(M REQUIRED)
+FIND_PACKAGE(GL REQUIRED)
+FIND_PACKAGE(GLU REQUIRED)
+
+
+
+# the next line sets up include and link directories and defines some 
+variables that we will use.
+# you can modify the behavior by setting some variables, ee.g.
+SET ( QT_USE_OPENGL TRUE )
+SET ( QT_USE_QTXML TRUE )
+# -> this will cause cmake to include and link against the OpenGL module
+INCLUDE (
+    ${QT_USE_FILE}
+)
+
+SET(LIBRARIES
+    ${QT_LIBRARIES}
+        ${QT_QTOPENGL_LIBRARIES}
+        ${QGLVIEWER_LIBRARY}
+${PROJECT_LIBRARIES}
+        ${GMP_LIBRARIES}
+        ${M_LIBRARIES}
+        ${GL_LIBRARIES}
+        ${GLU_LIBRARIES}
+)
+SET(INCLUDE_DIR
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${QT_INCLUDE_DIR}
+    ${QT_QTOPENGL_INCLUDE_DIR}
+    ${QT_INCLUDE_DIR}
+    ${GMP_INCLUDE_DIR}
+    ${M_INCLUDE_DIR}
+        ${GL_INCLUDE_DIR}
+        ${GLU_INCLUDE_DIR}
+
+)# Make sure the compiler can find include files from our Hello library.
+SET(SKINMESH_LIBRARIES
+    ${LIBRARY_OUTPUT_PATH}/libskinmesh.a
+)
+SET(SKINMESH_INCLUDE_DIR
+    ${CMAKE_SOURCE_DIR}/skinmesh
+)
+SET (INCLUDE_DIR
+    ${INCLUDE_DIR}
+    ${SKINMESH_INCLUDE_DIR}
+)
+SET(LIBRARIES
+    ${LIBRARIES}
+    ${SKINMESH_LIBRARIES}
+)
+#@TODO do this another way
+FIND_LIBRARY(C_LIBRARIES NAMES g2c
+            PATHS
+            /usr/lib/*
+            /usr/lib/*/*/*
+            /usr/local/lib/*
+            )
+        #add a library to the existing list
+        SET(LIBRARIES         ${LIBRARIES}
+                    ${C_LIBRARIES})
+
+
+
+#VARIABLE INITIALISATION
+
+# the variable "mdi_SRCS" contains all .cpp files of this project
+SET ( mdi_SRCS
+      main.cpp
+      mainwindow.cpp
+      csbdmainwindow.cpp
+      mdichild.cpp
+      csbdmdichild.cpp
+      csbdqglviewer.cpp
+    )
+
+#header files
+SET ( mdi_MOC_HDRS
+      mainwindow.h
+      csbdmainwindow.h
+      mdichild.h
+      csbdmdichild.h
+      csbdqglviewer.h
+
+
+    )
+#resource files
+SET ( mdi_RCCS
+      mdi.qrc
+      qt4skinmesh.qrc
+    )
+
+#.ui files
+SET ( mdi_UIS
+      mainwindow.ui
+      mdichild.ui
+    )
+
+
+
+
+#If you need cmake to generate ui*.h files from .ui files then you need 
+to use QT4_WRAP_UI
+
+QT4_WRAP_UI ( mdi_UIS_H ${mdi_UIS} )
+
+# generate rules for building source files from the resources
+QT4_ADD_RESOURCES ( mdi_RCC_SRCS ${mdi_RCCS} )
+
+
+# After this call, foo_MOC_SRCS = moc_Class1.cxx moc_Class2.cxx 
+moc_Class3.cxx.
+QT4_WRAP_CPP ( mdi_MOC_SRCS ${mdi_MOC_HDRS} )
+
+
+# tell cmake to create .moc files for all files in the variable mdi_SRCS 
+that require such a file.
+# note: this assumes that you use #include "header.moc" in your files
+QT4_AUTOMOC ( ${mdi_SRCS} )
+
+SET(mdi_EXECUTABLE
+                 ${mdi_SRCS}
+                 ${mdi_UIS_H}
+                 ${mdi_MOC_SRCS}
+                 ${mdi_RCC_SRCS}
+)
+
+# Don't forget to include output directory, otherwise
+# the UI file won't be wrapped!
+#                 include_directories (  )
+
+# create an executable file named "mdi" from the source files in the 
+variable "mdi_SRCS".
+ADD_EXECUTABLE ( mdi
+ ${mdi_EXECUTABLE}
+               )
+INCLUDE_DIRECTORIES(${INCLUDE_DIR})
+# link the "mdi" target against the Qt libraries. which libraries 
+exactly, is defined by the "include(${QT_USE_FILE})" line above, which 
+sets up this variable.INCLUDE_DIRECTORIES(
+TARGET_LINK_LIBRARIES ( mdi
+                        ${LIBRARIES}
+                      )
