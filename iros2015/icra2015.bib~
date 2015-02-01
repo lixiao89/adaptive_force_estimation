@@ -1,0 +1,14 @@
+@comment{x-kbibtex-personnameformatting=<%l><, %f>}
+
+@inproceedings{isha,
+	author = "Kandaswamy, I and Xia, T and Kazanzides, P",
+	title = "{Strategies and Models for Cutting Satellite Insulation in Telerobotic Servicing Missions}"
+}
+
+@proceedings{forgetfactor,
+	author = "Vahidi, A. and Stefanopoulou, A. and Peng, H.",
+	title = "{Recursive Least Squares with Forgetting for Online
+Estimation of Vehicle Mass and Road Grade: Theory
+and Experiments}"
+}
+
