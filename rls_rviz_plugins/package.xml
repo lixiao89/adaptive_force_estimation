@@ -3,9 +3,9 @@
   <name>rls_rviz_plugins</name>
   <version>0.1.0</version>
   <description>
-     Tutorials showing how to write plugins for RViz.
+     Implements rviz plugins for the adaptive force estimation interface
   </description>
-  <maintainer email="william@osrfoundation.org">William Woodall</maintainer>
+  <maintainer email="xli87@jhu.edu">Xiao Li</maintainer>
   <license>BSD</license>
 
   <url>http://ros.org/wiki/rviz_plugin_tutorials</url>

@@ -106,7 +106,6 @@ class rosRLS{
                 * Fe: tangential force as measured by the force sensor (currently force in the x direction)
                 * currtime: current time = osaGetTime() - startTime
                 * currJointPos: current joint positions for all 7 joints
-                * motionDetection: a switch to toggle between with and without motion detection feature
                 */
 
            rls->RLSestimate(Fn, 

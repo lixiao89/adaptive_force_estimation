@@ -1,6 +1,3 @@
-## BEGIN_TUTORIAL
-## This CMakeLists.txt file for rviz_plugin_tutorials builds both the TeleopPanel tutorial and the ImuDisplay tutorial.
-##
 ## First start with some standard catkin stuff.
 cmake_minimum_required(VERSION 2.8.3)
 project(rls_rviz_plugins)
@@ -13,18 +10,12 @@ link_directories(${catkin_LIBRARY_DIRS})
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
 
-## I prefer the Qt signals and slots to avoid defining "emit", "slots",
-## etc because they can conflict with boost signals, so define QT_NO_KEYWORDS here.
 #add_definitions(-DQT_NO_KEYWORDS)
 
 
 ## Here we specify which header files need to be run through "moc",
 ## Qt's meta-object compiler.
 qt4_wrap_cpp(MOC_FILES
-#  src/drive_widget.h
-#  src/imu_display.h
-#  src/plant_flag_tool.h
-#    src/ForceDrawWidget.h
     src/MenuPanel.h
     src/FailureReport.h
     src/ForcePanel.h
@@ -38,11 +29,6 @@ qt4_wrap_cpp(MOC_FILES
 ## Here we specify the list of source files, including the output of
 ## the previous command which is stored in ``${MOC_FILES}``.
 set(SOURCE_FILES
-  #  src/drive_widget.cpp
-  #  src/imu_display.cpp
-  #  src/imu_visual.cpp
-  #  src/plant_flag_tool.cpp
-  # src/ForceDrawWidget.cpp
   src/MenuPanel.cpp
   src/FailureReport.cpp
   src/ForcePanel.cpp
@@ -54,11 +40,6 @@ set(SOURCE_FILES
   ${MOC_FILES}
 )
 
-#SET( MOC_UIS
-#     src/mainwindow.ui
-#   )
-
-#QT4_WRAP_UI( MOC_UIS_H ${MOC_UIS})
 
 #INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 ## An rviz plugin is just a shared library, so here we declare the
